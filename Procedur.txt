@@ -1,0 +1,15 @@
+create proc stokEkstre
+as
+declare @IslemTur smallint
+if (@IslemTur=0)
+Begin 
+print('Giriş')
+End
+ else
+Begin 
+print('Çıkış')
+End
+
+ SELECT ID AS 'SiraNo',IslemTur,EvrakNo,CONVERT(VARCHAR(15), CAST(STI.Tarih - 2 AS datetime), 104) as 'TARİH', (select sum(Miktar) from STI  where  IslemTur = 0)  AS 'GirisMiktar',
+ (select sum(Miktar) from STI where  IslemTur = 1)  As 'CıkısMiktar'
+ FROM STI   ORDER BY STI.ID ASC
